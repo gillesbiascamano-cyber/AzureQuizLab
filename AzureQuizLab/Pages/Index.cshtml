@@ -5,6 +5,14 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome to AzureQuizLab V1.0</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (Model.MaintenanceMode)
+    {
+        <p class="alert alert-warning">🚧 Le site est actuellement en maintenance. Veuillez réessayer plus tard.</p>
+    }
+    else
+    {
+        <p class="alert alert-success">✅ Le site est opérationnel. Bienvenue !</p>
+    }
 </div>
