@@ -13,6 +13,12 @@
     }
     else
     {
-        <p class="alert alert-success">✅ Le site est opérationnel. Bienvenue !</p>
+        <div class="alert alert-info mt-3">
+            📊 Base de données :
+            <br />
+            Nombre de quiz : <strong>@Model.QuizCount</strong>
+            <br />
+            Nombre de questions : <strong>@Model.QuestionCount</strong>
+        </div>
     }
 </div>
