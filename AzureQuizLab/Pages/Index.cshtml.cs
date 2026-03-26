@@ -23,10 +23,13 @@ namespace AzureQuizLab.Pages
 
         public void OnGet()
         {
+            _logger.LogInformation("Chargement de la page d'accueil à {Time}", DateTime.UtcNow);
             MaintenanceMode = _configuration.GetValue<bool>("MaintenanceMode", false);
 
             QuizCount = _context.Quizzes.Count();
             QuestionCount = _context.Questions.Count();
+            _logger.LogInformation("Nombre de quiz : {QuizCount}", QuizCount);
+            _logger.LogInformation("Nombre de questions : {QuestionCount}", QuestionCount);
         }
     }
 }
