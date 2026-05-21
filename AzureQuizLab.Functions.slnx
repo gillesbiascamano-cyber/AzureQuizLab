@@ -1,4 +1,3 @@
 <Solution>
   <Project Path="AzureQuizLab.Functions/AzureQuizLab.Functions.csproj" />
-  <Project Path="AzureQuizLab/AzureQuizLab.csproj" />
 </Solution>
