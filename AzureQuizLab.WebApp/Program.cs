@@ -1,4 +1,5 @@
 using AzureQuizLab.Models;
+using AzureQuizLab.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container..
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<BlobService>();
 
 builder.Services.AddDbContext<QuizDbContext>(options =>
 {
