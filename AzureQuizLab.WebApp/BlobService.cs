@@ -11,7 +11,7 @@ public class BlobService
     public BlobService(IConfiguration config, IHostEnvironment env)
     {
         TokenCredential credential = env.IsDevelopment()
-            ? new AzureCliCredential()
+            ? new ManagedIdentityCredential()
             : new ManagedIdentityCredential();
 
         var serviceClient = new BlobServiceClient(
