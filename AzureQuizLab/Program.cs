@@ -1,4 +1,5 @@
 using AzureQuizLab.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +8,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<QuizDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    // Lecture depuis appsettings.Development.json en local
+    // ou depuis les variables d'environnement Azure App Service
+    var sqlServerName = builder.Configuration["SqlServerName"];
+    var sqlDatabaseName = builder.Configuration["SqlDatabaseName"];
+
+    // On part toujours de la DefaultConnection existante
+    var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+
+    // Si SqlServerName est renseigné, on remplace le nom du serveur
+    if (!string.IsNullOrWhiteSpace(sqlServerName))
+    {
+        sqlConnectionStringBuilder.DataSource = $"{sqlServerName}.database.windows.net";
+    }
+
+    // Si SqlDatabaseName est renseigné, on remplace le nom de la base
+    if (!string.IsNullOrWhiteSpace(sqlDatabaseName))
+    {
+        sqlConnectionStringBuilder.InitialCatalog = sqlDatabaseName;
+    }
+
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions => sqlOptions.EnableRetryOnFailure()
-    ));
+        sqlConnectionStringBuilder.ConnectionString,
+        sqlOptions => sqlOptions.EnableRetryOnFailure());
+});
 
 var app = builder.Build();
 
